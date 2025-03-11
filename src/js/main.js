@@ -1,4 +1,3 @@
 import '../scss/style.scss'
-import {addTask} from './requests'
+import {fetchWrapper } from './service/Fetch-wrapper'
 
-addTask()
