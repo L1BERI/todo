@@ -47,6 +47,9 @@ body{
     position: relative;
     height: 40px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 .todo-input{
     width: 100%;
@@ -168,4 +171,32 @@ body{
     svg path{
         fill: var(--main-purple-10);
     }
+}
+
+.error-message{
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--main-pink-10);
+    margin-top: 5px;
+}
+
+
+.form-invalid .input-wrapper{
+    animation: formInvalid .3s alternate;
+}
+
+@keyframes formInvalid {
+    0%{
+        rotate:0deg
+    } 25% {
+        rotate: 2deg;
+    } 50%{
+        rotate: -2deg;
+    } 75%{
+        rotate: 2deg;
+    } 100%{
+        rotate: 0deg;
+    }
+
 }

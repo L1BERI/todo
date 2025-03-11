@@ -27,6 +27,9 @@ class FetchWrapper {
           'Content-Type': 'application/json',
         },
       });
+      if(!response.ok){
+        throw new Error('Что-то пошло не так')
+      }
       return response.json();
     }
   
