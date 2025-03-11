@@ -39,6 +39,7 @@ class FetchWrapper {
   }
 
 
-
   
- export const fetchWrapper = new FetchWrapper('https://87deb06c9d3bfa1a.mokky.dev');
+ export const fetchWrapper = new FetchWrapper(import.meta.env.VITE_URL_LINK);
+
+
