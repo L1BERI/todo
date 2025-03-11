@@ -5,6 +5,10 @@ class TodoApi {
   addToDo(data) {
     return fetchWrapper.post(this.baseUrl, data);
   }
+
+  removeToDo(id){
+    return fetchWrapper.delete(this.baseUrl, id)
+  }
 }
 
 export const todoApi = new TodoApi();
