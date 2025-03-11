@@ -39,4 +39,6 @@ class FetchWrapper {
   }
 
 
+
+  
  export const fetchWrapper = new FetchWrapper('https://87deb06c9d3bfa1a.mokky.dev');
