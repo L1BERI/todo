@@ -1,7 +1,5 @@
 import "../scss/style.scss";
-
 import { todoApi } from "./todo/todoApi";
-
 import { createTodoItem } from "./todo/todoItemTemplate";
 
 const todoFormElement = document.querySelector("[data-todo-form]");
@@ -12,17 +10,15 @@ const todoListElement = document.querySelector("[data-todo-list]");
 
 const todoErrorMesage = document.querySelector("[data-todo-form-error]");
 
-const todoRemoveBtn = document.querySelector('[data-todo-remove-btn]')
+const localStorageArr = JSON.parse(localStorage.getItem("tasks"));
 
+localStorage.removeItem('tasks')
+let tasksArr = localStorageArr?.length
+  ? JSON.parse(localStorage.getItem("tasks"))
+  : [];
 
-// localStorage.removeItem('tasks')
-let tasksArr = localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks")) : [];
-
-
-
-for (const task of tasksArr){
-   
-    todoListElement.innerHTML += createTodoItem(task)
+for (const task of tasksArr) {
+  todoListElement.innerHTML += createTodoItem(task);
 }
 
 todoInputElement.addEventListener("input", () => {
@@ -31,6 +27,7 @@ todoInputElement.addEventListener("input", () => {
 });
 
 todoFormElement.addEventListener("submit", (event) => {
+
   event.preventDefault();
 
   if (!isFormValid(todoInputElement.value)) {
@@ -38,18 +35,18 @@ todoFormElement.addEventListener("submit", (event) => {
     todoFormElement.classList.add("form-invalid");
     return;
   }
-  const data = {
-    task: todoInputElement.value,
+
+  const taskPayload = {
+    name: todoInputElement.value,
     isCompleted: false,
   };
 
-
   todoApi
-    .addToDo(data)
-    .then((data) => {
-     tasksArr.push(todoInputElement.value);
-     localStorage.setItem("tasks", JSON.stringify(tasksArr));
-      todoListElement.innerHTML += createTodoItem(data.task);
+    .addToDo(taskPayload)
+    .then((result) => {
+      tasksArr.push(result);
+      localStorage.setItem("tasks", JSON.stringify(tasksArr));
+      todoListElement.innerHTML += createTodoItem(result);
       todoInputElement.value = "";
     })
     .catch((error) => {
@@ -61,11 +58,30 @@ function isFormValid(value) {
   return !!value;
 }
 
+todoListElement.addEventListener("click", (event) => {
 
-document.addEventListener('click', (event)=>{
-    const {target} = event
-    if (target.closest('[data-todo-remove-btn]')){
-      const currentTask =  target.closest('[data-todo-item]').querySelector('[data-task-text]').textContent
-      
+  const { target } = event;
+  const todoRemoveBtn = target.closest("[data-todo-remove-btn]");
+
+  if (todoRemoveBtn) {
+
+    const currentTaskItem = target.closest("[data-todo-item]");
+    const itemUniqueId = currentTaskItem.getAttribute("id");
+    const isTaskExist = tasksArr.some((item) => item.id === +itemUniqueId);
+
+    if (isTaskExist) {
+      todoApi
+        .removeToDo(itemUniqueId)
+        .then(() => {
+          tasksArr = tasksArr.filter((item) => item.id !== +itemUniqueId);
+          localStorage.setItem("tasks", JSON.stringify(tasksArr));
+          currentTaskItem.remove();
+        })
+        .catch(() => {
+          todoErrorMesage.innerHTML = 'Удалить не получилось';
+        });
     }
-})
+  }
+
+ 
+});

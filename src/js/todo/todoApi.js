@@ -1,13 +1,13 @@
 import { fetchWrapper } from "../service/Fetch-wrapper";
 
 class TodoApi {
-  baseUrl = "/tasks";
+  endPoint = "tasks";
   addToDo(data) {
-    return fetchWrapper.post(this.baseUrl, data);
+    return fetchWrapper.post(this.endPoint, data);
   }
 
   removeToDo(id){
-    return fetchWrapper.delete(this.baseUrl, id)
+    return fetchWrapper.delete(this.endPoint, id)
   }
 }
 
