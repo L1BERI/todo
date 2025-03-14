@@ -1,7 +1,7 @@
-export const createTodoItem = (text) =>{
+export const createTodoItem = (task) =>{
     return `
-     <li class="todo__item" data-todo-item>
-      <span class="todo__item-text" data-task-text>${text}</span>
+     <li class="todo__item" data-todo-item id="${task.id}">
+      <span class="todo__item-text" data-task-text>${task.name}</span>
       <div class="todo__item-btns">
         <button class="todo__btn-complete todo__item-btn" data-todo-complete-btn>
           <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">

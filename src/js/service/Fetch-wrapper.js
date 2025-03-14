@@ -2,7 +2,7 @@ class FetchWrapper {
     constructor(baseUrl) {
       this.baseUrl = baseUrl;
     }
-  
+    
     async get(url) {
       const response = await fetch(`${this.baseUrl}${url}`);
       return response.json();
@@ -19,8 +19,9 @@ class FetchWrapper {
       return response.json();
     }
   
-    async post(url, data) {
-      const response = await fetch(`${this.baseUrl}${url}`, {
+    async post(endpoint, data) {
+      const url = `${this.baseUrl}/${endpoint}`
+      const response = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -33,11 +34,19 @@ class FetchWrapper {
       return response.json();
     }
   
-    async delete(url) {
-      const response = await fetch(`${this.baseUrl}${url}`, {
+    async delete(endpoint, id) {
+      const url = `${this.baseUrl}/${endpoint}/${id}`
+
+      const response = await fetch(url, {
         method: 'DELETE',
       });
-      return response.json();
+
+      if(!response.ok){
+        throw new Error()
+      }
+      
+      
+      return response;
     }
   }
 
