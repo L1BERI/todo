@@ -2,6 +2,7 @@ import { fetchWrapper } from "../service/Fetch-wrapper";
 
 class TodoApi {
   endPoint = "tasks";
+
   addToDo(data) {
     return fetchWrapper.post(this.endPoint, data);
   }
@@ -10,7 +11,7 @@ class TodoApi {
     return fetchWrapper.delete(this.endPoint, id)
   }
 
-  putToDo(id, data){
+  updateTaskStatusToDo(id, data){
     return fetchWrapper.put(this.endPoint, id, data)
   }
 }
