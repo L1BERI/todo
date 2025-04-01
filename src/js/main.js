@@ -3,25 +3,14 @@ import { todoApi } from "./todo/todoApi";
 import { createTodoItem } from "./todo/todoItemTemplate";
 import { createCompleteTodoItem } from "./todo/todoItemCompleteTemplate";
 
-const todoFormElement = document.querySelector("[data-todo-form]");
 
-const tasksCountElement = document.querySelector("[data-task-count]");
 
-const tasksCompletedElement = document.querySelector("[data-task-completed]");
 
-const tasksnotCompletedTasksElement = document.querySelector(
-  "[data-task-completed-count]"
-);
+const
 
-const todoInputElement = todoFormElement.querySelector("[data-todo-input]");
 
-const todoListElement = document.querySelector("[data-todo-list]");
 
-const todoErrorMesage = document.querySelector("[data-todo-form-error]");
 
-const todoListCompletedElement = document.querySelector(
-  "[data-todo-completed-list]"
-);
 
 const localStorageArr = JSON.parse(localStorage.getItem("tasks"));
 
