@@ -3,14 +3,18 @@ class FetchWrapper {
       this.baseUrl = baseUrl;
     }
     
-    async get(url) {
-      const response = await fetch(`${this.baseUrl}${url}`);
+    async get(endpoint) {
+      const url = `${this.baseUrl}/${endpoint}`
+      const response = await fetch(url);
+      if(!response.ok){
+        throw new Error()
+      }
       return response.json();
     }
   
     async put(endpoint, id,data) {
       const url = `${this.baseUrl}/${endpoint}/${id}`
-      console.log(url);
+   
       const response = await fetch(url, {
         method: 'PATCH',
         body: JSON.stringify(data),
@@ -18,6 +22,9 @@ class FetchWrapper {
           'Content-Type': 'application/json',
         },
       });
+      if(!response.ok){
+        throw new Error()
+      }
       return response.json();
     }
   

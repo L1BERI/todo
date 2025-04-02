@@ -24,11 +24,20 @@ class ToDoList {
     this.bindEvents();
   }
 
-  getTasksOnLoad = () => {
+  getTasksOnLoad = async () => {
     const localStorageArr = JSON.parse(localStorage.getItem("tasks"));
     this.tasksArr = localStorageArr?.length
       ? JSON.parse(localStorage.getItem("tasks"))
       : [];
+      if (this.tasksArr.length === 0) {
+        try {
+          const result = await todoApi.getTasks()
+          this.tasksArr = [...result]
+        } catch {
+          this.elements.todoErrorMesage = 'Не получилось загрузить данные'
+          this.tasksArr = []
+        }
+      }
     const {
       todoListElement,
       tasksCountElement,
@@ -37,8 +46,8 @@ class ToDoList {
       tasksCompletedElement,
     } = this.elements;
 
-    const { tasksArr } = this;
-    for (const task of tasksArr) {
+  
+    for (const task of this.tasksArr) {
       if (task.isCompleted === false) {
         this.notCompletedTasks++;
         todoListElement.innerHTML += createTodoItem(task);
@@ -49,7 +58,7 @@ class ToDoList {
     }
     tasksCountElement.textContent = this.notCompletedTasks;
     tasksNotCompletedTasksElement.textContent =
-      tasksArr.length - this.notCompletedTasks;
+    this.tasksArr.length - this.notCompletedTasks;
 
     this.isCompletedTaskEmpty();
   };

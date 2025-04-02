@@ -3,6 +3,9 @@ import { fetchWrapper } from "../service/Fetch-wrapper";
 class TodoApi {
   endPoint = "tasks";
 
+  getTasks(){
+    return fetchWrapper.get(this.endPoint)
+  }
   addToDo(data) {
     return fetchWrapper.post(this.endPoint, data);
   }
