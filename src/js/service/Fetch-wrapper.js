@@ -8,9 +8,11 @@ class FetchWrapper {
       return response.json();
     }
   
-    async put(url, data) {
-      const response = await fetch(`${this.baseUrl}${url}`, {
-        method: 'PUT',
+    async put(endpoint, id,data) {
+      const url = `${this.baseUrl}/${endpoint}/${id}`
+      console.log(url);
+      const response = await fetch(url, {
+        method: 'PATCH',
         body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json',
